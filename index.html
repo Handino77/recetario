@@ -3,336 +3,769 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Recetas premium de repostería chilena para emprendedoras. Precisión, sabor y tradición en cada bocado.">
-    <meta name="keywords" content="repostería, recetas, chileno, emprendedoras, dulces">
-    <meta property="og:title" content="Dolce Delizia - El Secreto de la Repostería Chilena">
-    <meta property="og:description" content="Recetas premium con un toque chileno.">
-    <meta property="og:image" content="https://example.com/imagen-hero.jpg">
-    <title>Dolce Delizia</title>
+    <title>Aura Pâtisserie - Recetario de Alta Repostería</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* Estilos generales para branding: paleta cálida (cremas, dorados, pasteles) con toques chilenos (rojo/verde sutil) */
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fdfaf7; /* Crema suave */
-            color: #4a3c31; /* Marrón chocolate */
-        }
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            color: #a52a2a; /* Rojo vino chileno */
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #fffaf0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .logo {
-            width: 150px;
-            height: auto;
-        }
-        nav a {
-            margin-left: 20px;
-            text-decoration: none;
-            color: #4a3c31;
-            font-weight: bold;
-        }
-        .shopping-list-btn {
-            background-color: #ffd700; /* Dorado */
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .hero {
-            text-align: center;
-            padding: 50px 20px;
-            background-image: url('placeholder-hero.jpg'); /* Placeholder para imagen hero */
-            background-size: cover;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        .hero input[type="search"] {
-            width: 60%;
-            max-width: 600px;
-            padding: 15px;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            margin-top: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .recipes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        .recipe-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        .recipe-card:hover {
-            transform: scale(1.05);
-        }
-        .recipe-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background-color: #eee; /* Placeholder para imágenes */
-        }
-        .recipe-content {
-            padding: 20px;
-        }
-        .ingredients-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .ingredients-list li {
-            margin-bottom: 10px;
-        }
-        .calculator {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-        .calculator input {
-            width: 60px;
-            padding: 5px;
-            margin-left: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .calculator button {
-            background-color: #ffd700;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-        .no-results {
-            text-align: center;
-            padding: 50px;
-            font-size: 18px;
-            color: #888;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            z-index: 200;
-            width: 80%;
-            max-width: 500px;
-        }
-        .modal.show {
-            display: block;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-        .modal button {
-            background-color: #ffd700;
-            border: none;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #fffaf0;
-            margin-top: 40px;
-        }
-        .social-links a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #4a3c31;
+        :root {
+            --color-sage-green: #93cb9a;
+            --color-pastel-pink: #f0b7bd;
+            --color-vanilla-yellow: #f3e88e;
+            --color-light-aqua: #99e3ec;
+            --color-deep-aqua: #50b4c3;
+            --color-text-dark: #3f3d56;
+            --color-text-light: #65647C;
+            --color-background: #fdfcfa;
         }
 
-        /* Responsivo */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-            }
-            nav {
-                margin-top: 10px;
-            }
-            .hero input[type="search"] {
-                width: 90%;
-            }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-dark);
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .brand-accent {
+            color: var(--color-pastel-pink);
+        }
+        
+        .btn-primary {
+            background-color: var(--color-pastel-pink);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px -5px rgba(240, 183, 189, 0.7);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px -5px rgba(240, 183, 189, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -10px rgba(147, 203, 154, 0.2);
+        }
+
+        .modal-backdrop {
+            background-color: rgba(63, 61, 86, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .favorite.active svg {
+            fill: var(--color-pastel-pink);
+            stroke: var(--color-pastel-pink);
+        }
+        
+        .loader {
+            border: 4px solid #fde2e4;
+            border-top: 4px solid var(--color-pastel-pink);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        .hero-swoosh {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .hero-swoosh svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 110px;
+        }
+        .hero-swoosh .shape-fill {
+            fill: var(--color-background);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body>
-    <header class="header">
-        <img src="placeholder-logo.png" alt="Dolce Delizia Logo" class="logo"> <!-- Placeholder para logo -->
-        <nav>
-            <a href="/">Inicio</a>
-            <a href="/recetas">Recetas</a>
-            <a href="/tienda">Tienda</a>
-            <a href="/contacto">Contacto</a>
-        </nav>
-        <button class="shopping-list-btn" onclick="toggleModal()">Lista de Compras (0)</button>
+<body class="antialiased">
+
+    <header class="bg-white/70 backdrop-blur-lg sticky top-0 z-40 border-b border-gray-100">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <svg class="h-9 w-9" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" fill="#f0b7bd"/>
+                    <path d="M8.5 10C9.32843 10 10 9.32843 10 8.5C10 7.67157 9.32843 7 8.5 7C7.67157 7 7 7.67157 7 8.5C7 9.32843 7.67157 10 8.5 10Z" fill="white"/>
+                    <path d="M15.5 15C16.3284 15 17 14.3284 17 13.5C17 12.6716 16.3284 12 15.5 12C14.6716 12 14 12.6716 14 13.5C14 14.3284 14.6716 15 15.5 15Z" fill="white"/>
+                    <path d="M9 17C10.1046 17 11 16.1046 11 15C11 13.8954 10.1046 13 9 13C7.89543 13 7 13.8954 7 15C7 16.1046 7.89543 17 9 17Z" fill="#f3e88e"/>
+                </svg>
+                <h1 class="text-3xl font-bold font-display text-gray-700">Aura <span class="brand-accent">Pâtisserie</span></h1>
+            </div>
+            <div class="flex items-center space-x-6">
+                <button id="favoritesBtn" class="text-gray-600 hover:text-pink-400 transition-colors font-semibold">Favoritos</button>
+                <button id="shoppingListBtn" class="relative text-gray-600 hover:text-pink-400 transition-colors font-semibold">
+                    <span>Mi Lista</span>
+                    <span id="shoppingListCount" class="absolute -top-2 -right-3 bg-pink-400 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
+                </button>
+            </div>
+        </div>
     </header>
 
     <main>
-        <section class="hero">
-            <h1>El Secreto de la Repostería</h1>
-            <p>Recetas premium con un toque chileno. Precisión, sabor y tradición en cada bocado.</p>
-            <input type="search" placeholder="Busca tu receta favorita..." aria-label="Buscar recetas" oninput="searchRecipes(this.value)">
+        <section class="text-center pt-20 pb-28 relative" style="background: linear-gradient(135deg, #f0b7bd1a, #93cb9a1a);">
+            <div class="container mx-auto px-6">
+                <h2 class="text-5xl md:text-6xl font-display text-gray-700 mb-4">El Arte de Crear Dulzura</h2>
+                <p class="text-lg text-gray-500 max-w-2xl mx-auto">Recetas profesionales con un toque de encanto chileno. Ingredientes precisos para resultados perfectos.</p>
+            </div>
+            <div class="hero-swoosh">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
         </section>
 
-        <section class="recipes" id="recipes-container">
-            <!-- Recetas conservadas como placeholders; se reemplazarán por reales -->
-            <div class="recipe-card">
-                <img src="placeholder-recipe1.jpg" alt="Torta de Manjar" class="recipe-image">
-                <div class="recipe-content">
-                    <h3>Torta de Manjar</h3>
-                    <p>Una deliciosa torta tradicional chilena con capas de manjar y bizcocho suave.</p>
-                    <ul class="ingredients-list" data-base-servings="8">
-                        <li><span class="quantity">2</span> tazas de harina</li>
-                        <li><span class="quantity">1</span> taza de azúcar</li>
-                        <li><span class="quantity">500</span> g de manjar</li>
-                        <li><span class="quantity">4</span> huevos</li>
-                        <li><span class="quantity">1</span> cucharadita de vainilla</li>
-                    </ul>
-                    <div class="calculator">
-                        <label>Porciones: <input type="number" value="8" min="1" onchange="calculateIngredients(this)"></label>
-                        <button onclick="addToShoppingList(this)">Agregar a Lista</button>
+        <div class="container mx-auto px-6 py-12 -mt-16">
+            <section class="mb-12">
+                <div class="relative max-w-xl mx-auto">
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre o ingrediente..." class="w-full pl-6 pr-14 py-4 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-pastel-pink transition-all shadow-lg text-lg">
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2">
+                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
                 </div>
+            </section>
+
+            <section id="recipe-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                </section>
+            <div id="no-results" class="text-center py-12 hidden">
+                <h3 class="text-2xl font-display text-gray-600">No hemos encontrado esa receta</h3>
+                <p class="text-gray-500 mt-2">Prueba con otras palabras clave.</p>
             </div>
-
-            <div class="recipe-card">
-                <img src="placeholder-recipe2.jpg" alt="Empanadas Dulces" class="recipe-image">
-                <div class="recipe-content">
-                    <h3>Empanadas Dulces</h3>
-                    <p>Empanadas rellenas de frutas y especias, perfectas para un postre chileno.</p>
-                    <ul class="ingredients-list" data-base-servings="10">
-                        <li><span class="quantity">3</span> tazas de harina</li>
-                        <li><span class="quantity">200</span> g de mantequilla</li>
-                        <li><span class="quantity">2</span> manzanas</li>
-                        <li><span class="quantity">1</span> taza de azúcar morena</li>
-                        <li><span class="quantity">1</span> cucharadita de canela</li>
-                    </ul>
-                    <div class="calculator">
-                        <label>Porciones: <input type="number" value="10" min="1" onchange="calculateIngredients(this)"></label>
-                        <button onclick="addToShoppingList(this)">Agregar a Lista</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Más recetas placeholders si es necesario -->
-        </section>
-
-        <div class="no-results" id="no-results" style="display: none;">
-            No encontramos esa delicia. Intenta con otra búsqueda.
         </div>
     </main>
 
-    <div class="modal" id="shopping-modal">
-        <h2>Lista de Compras</h2>
-        <ul id="shopping-list"></ul>
-        <div>
-            <button onclick="exportList('copy')">Copiar</button>
-            <button onclick="exportList('txt')">Descargar TXT</button>
-            <button onclick="exportList('pdf')">Descargar PDF</button>
-            <button onclick="shareWhatsApp()">WhatsApp</button>
-        </div>
-        <button onclick="toggleModal()">Cerrar</button>
-        <p>Generando PDF...</p> <!-- Placeholder para loading -->
+    <div id="recipe-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl h-[90vh] flex flex-col transform transition-all duration-300 scale-95 opacity-0">
+            </div>
     </div>
 
-    <footer>
-        <p>© 2025 Dulce Chile. Creado con amor para emprendedoras.</p>
-        <div class="social-links">
-            <a href="https://instagram.com/dolcedelizia">Instagram</a>
-            <a href="https://pinterest.com/dolcedelizia">Pinterest</a>
+    <div id="shopping-list-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-2xl w-11/12 md:w-2/3 lg:w-1/2 max-w-2xl h-[90vh] flex flex-col transform transition-all duration-300 scale-95 opacity-0">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h2 class="text-3xl font-display text-gray-700">Lista de Compras</h2>
+                <button id="close-shopping-list-modal" class="text-gray-400 hover:text-gray-800 text-3xl font-light">&times;</button>
+            </div>
+            <div id="shopping-list-content" class="p-6 overflow-y-auto flex-grow bg-gray-50/50">
+                </div>
+            <div class="p-6 border-t bg-white rounded-b-2xl">
+                <h3 class="font-semibold mb-4 text-gray-600">Exportar y Compartir</h3>
+                <div class="flex flex-wrap gap-3">
+                    <button id="copy-list-btn" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-transform hover:scale-105 text-sm font-semibold">Copiar</button>
+                    <button id="download-txt-btn" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-transform hover:scale-105 text-sm font-semibold">Descargar TXT</button>
+                    <button id="download-pdf-btn" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-transform hover:scale-105 text-sm font-semibold">Descargar PDF</button>
+                    <a id="whatsapp-share-btn" href="#" target="_blank" class="bg-[#25D366] text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-transform hover:scale-105 text-sm flex items-center font-semibold">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.651 4.383 1.803 6.166l-1.225 4.485 4.574-1.196z"/></svg>
+                        WhatsApp
+                    </a>
+                </div>
+                 <div id="pdf-loader" class="hidden items-center mt-4">
+                    <div class="loader"></div>
+                    <span class="ml-3 text-gray-500">Generando PDF, un momento...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-16 border-t border-gray-100" style="background: linear-gradient(135deg, #f0b7bd1a, #93cb9a1a);">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+            <p>&copy; 2025 Aura Pâtisserie. Diseñado con amor para reposteras de Chile.</p>
         </div>
     </footer>
 
     <script>
-        // Funcionalidad de búsqueda (simulada)
-        function searchRecipes(query) {
-            const recipes = document.querySelectorAll('.recipe-card');
-            const noResults = document.getElementById('no-results');
-            let hasResults = false;
-            recipes.forEach(card => {
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                if (title.includes(query.toLowerCase())) {
-                    card.style.display = 'block';
-                    hasResults = true;
-                } else {
-                    card.style.display = 'none';
-                }
+    // --- SCRIPT DE FUNCIONALIDAD ---
+    // El código JavaScript proporcionado en el archivo original se inserta aquí.
+    // No se requieren cambios en la lógica, ya que los IDs y clases principales se han mantenido.
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DATA ---
+        const recipes = [
+            {
+                id: 1,
+                name: "Pie de Limón Clásico",
+                description: "La combinación perfecta de acidez y dulzura sobre una base crujiente.",
+                image: "https://images.unsplash.com/photo-1572383672419-ab35444a6914?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                servings: { default: 8, unit: 'porciones' },
+                ingredients: [
+                    { name: 'Galletas de vino', base_quantity: 200, unit: 'g' },
+                    { name: 'Mantequilla sin sal, derretida', base_quantity: 100, unit: 'g' },
+                    { name: 'Leche condensada', base_quantity: 790, unit: 'g' }, // 2 latas
+                    { name: 'Yemas de huevo', base_quantity: 4, unit: 'unidades' },
+                    { name: 'Jugo de limón fresco', base_quantity: 240, unit: 'ml' },
+                    { name: 'Ralladura de limón', base_quantity: 1, unit: 'cda' },
+                    { name: 'Claras de huevo', base_quantity: 4, unit: 'unidades' },
+                    { name: 'Azúcar granulada (para merengue)', base_quantity: 200, unit: 'g' },
+                ],
+                instructions: [
+                    "Precalentar el horno a 180°C. Procesar las galletas hasta obtener una molienda fina. Combinar con la mantequilla derretida hasta obtener una textura de arena húmeda.",
+                    "Disponer la mezcla de galletas en la base y paredes de un molde para tarta de 23 cm, presionando de manera uniforme. Hornear por 10 minutos para sellar la base. Reservar y dejar enfriar.",
+                    "Para el relleno, batir la leche condensada con las yemas de huevo. Incorporar de forma envolvente el jugo y la ralladura de limón hasta lograr una emulsión homogénea y sedosa.",
+                    "Verter el relleno sobre la base de galleta previamente horneada y enfriada. Hornear durante 15-20 minutos, o hasta que los bordes estén cuajados y el centro presente una ligera fluctuación. Enfriar por completo a temperatura ambiente.",
+                    "Para preparar el merengue suizo, disponer las claras y el azúcar en un bol resistente al calor sobre una cacerola con agua a fuego bajo (baño maría). Batir constantemente hasta que los cristales de azúcar se hayan disuelto por completo (aproximadamente 60°C).",
+                    "Retirar el bol del calor y batir con una batidora eléctrica a velocidad alta hasta formar un merengue firme, brillante y con picos estables.",
+                    "Cubrir el pie con el merengue, creando picos decorativos con una espátula. Dorar la superficie con un soplete de cocina o bajo el grill del horno por breves instantes hasta alcanzar la caramelización deseada. Refrigerar un mínimo de 4 horas antes de servir."
+                ]
+            },
+            {
+                id: 2,
+                name: "Brownies de Chocolate Intenso",
+                description: "Húmedos, densos y con un profundo sabor a chocolate. Ideales para cafeterías.",
+                image: "https://images.unsplash.com/photo-1563373878-33403a2702a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                servings: { default: 16, unit: 'unidades' },
+                ingredients: [
+                    { name: 'Mantequilla sin sal', base_quantity: 225, unit: 'g' },
+                    { name: 'Chocolate semi-amargo (50-60%)', base_quantity: 200, unit: 'g' },
+                    { name: 'Azúcar granulada', base_quantity: 300, unit: 'g' },
+                    { name: 'Huevos grandes', base_quantity: 4, unit: 'unidades' },
+                    { name: 'Extracto de vainilla', base_quantity: 2, unit: 'cdtas' },
+                    { name: 'Harina sin polvos de hornear', base_quantity: 120, unit: 'g' },
+                    { name: 'Cacao en polvo sin azúcar', base_quantity: 30, unit: 'g' },
+                    { name: 'Sal', base_quantity: 0.5, unit: 'cdtas' },
+                    { name: 'Nueces o chips de chocolate (opcional)', base_quantity: 100, unit: 'g' },
+                ],
+                instructions: [
+                    "Precalentar el horno a 175°C. Preparar un molde cuadrado de 23x23 cm con papel mantequilla, dejando un exceso en los bordes para facilitar el desmolde.",
+                    "Derretir la mantequilla junto con el chocolate a baño maría o en el microondas en intervalos de 30 segundos, removiendo hasta obtener una mezcla lisa. Dejar atemperar.",
+                    "En un bol grande, batir los huevos con el azúcar a velocidad media-alta hasta que la mezcla esté pálida, haya duplicado su volumen y forme una cinta al caer (punto de ruban). Incorporar la vainilla.",
+                    "Verter la mezcla de chocolate atemperada sobre la emulsión de huevos y azúcar, integrando con movimientos envolventes.",
+                    "En un recipiente aparte, tamizar la harina, el cacao en polvo y la sal. Incorporar los ingredientes secos a la mezcla húmeda en dos adiciones, mezclando suavemente solo hasta que no queden rastros de harina.",
+                    "Si se desea, añadir las nueces o chips de chocolate, distribuyéndolos de manera uniforme.",
+                    "Verter la masa en el molde preparado, alisando la superficie. Hornear por 30-35 minutos. Un palillo insertado en el centro debe salir con migas húmedas, no líquido. Enfriar completamente sobre una rejilla antes de cortar."
+                ]
+            },
+            {
+                id: 3,
+                name: "Cupcakes de Vainilla Perfectos",
+                description: "Una base esponjosa y versátil para decorar. El clásico que nunca falla.",
+                image: "https://images.unsplash.com/photo-1614707267537-b85aaf00c8b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                servings: { default: 12, unit: 'unidades' },
+                ingredients: [
+                    { name: 'Harina sin polvos de hornear', base_quantity: 150, unit: 'g' },
+                    { name: 'Polvos de hornear', base_quantity: 1.5, unit: 'cdtas' },
+                    { name: 'Sal', base_quantity: 0.25, unit: 'cdtas' },
+                    { name: 'Mantequilla sin sal, a T° ambiente', base_quantity: 115, unit: 'g' },
+                    { name: 'Azúcar granulada', base_quantity: 200, unit: 'g' },
+                    { name: 'Huevos grandes', base_quantity: 2, unit: 'unidades' },
+                    { name: 'Extracto de vainilla', base_quantity: 2, unit: 'cdtas' },
+                    { name: 'Leche entera', base_quantity: 120, unit: 'ml' },
+                ],
+                instructions: [
+                    "Precalentar el horno a 175°C y disponer cápsulas de papel en un molde para 12 cupcakes.",
+                    "En un bol mediano, tamizar y mezclar la harina, polvos de hornear y sal. Reservar.",
+                    "En un bol grande, batir la mantequilla a temperatura ambiente con el azúcar a velocidad media-alta hasta obtener una mezcla pálida y cremosa (aproximadamente 3-5 minutos).",
+                    "Añadir los huevos uno a uno, batiendo bien después de cada adición para asegurar una correcta emulsión. Incorporar la vainilla.",
+                    "Reducir la velocidad de la batidora y agregar los ingredientes secos en tres partes, alternando con la leche en dos partes (seco-leche-seco-leche-seco). Mezclar solo hasta que los ingredientes estén combinados; no sobrebatir.",
+                    "Distribuir la masa de forma equitativa en las cápsulas, llenándolas hasta 2/3 de su capacidad para permitir una expansión controlada.",
+                    "Hornear por 20-22 minutos o hasta que un palillo insertado en el centro de un cupcake salga limpio. Dejar enfriar en el molde por 5 minutos antes de transferirlos a una rejilla para que se enfríen por completo."
+                ]
+            },
+            {
+                id: 4,
+                name: "Cocadas Tradicionales",
+                description: "Bocados dulces y jugosos de coco, horneados a la perfección.",
+                image: "https://images.unsplash.com/photo-1625864114248-529532584831?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                servings: { default: 24, unit: 'unidades' },
+                ingredients: [
+                    { name: 'Coco rallado deshidratado', base_quantity: 250, unit: 'g' },
+                    { name: 'Leche condensada', base_quantity: 395, unit: 'g' }, // 1 lata
+                    { name: 'Yemas de huevo', base_quantity: 2, unit: 'unidades' },
+                    { name: 'Extracto de vainilla', base_quantity: 1, unit: 'cdta' },
+                ],
+                instructions: [
+                    "Precalentar el horno a 170°C. Preparar una bandeja de horno con papel mantequilla o un tapete de silicona.",
+                    "En un bol grande, combinar el coco rallado, la leche condensada, las yemas de huevo y el extracto de vainilla. Mezclar con una espátula hasta que todos los ingredientes estén completamente integrados.",
+                    "Utilizando dos cucharas o una cuchara para helado pequeña, formar porciones de la mezcla y disponerlas sobre la bandeja preparada, dejando un pequeño espacio entre cada una.",
+                    "Hornear durante 15-20 minutos. Las cocadas deben estar doradas en los bordes y en la base, pero el centro debe permanecer tierno y húmedo.",
+                    "Retirar del horno y dejar enfriar completamente sobre la bandeja. Las cocadas se endurecerán a medida que se enfrían. Manipular con cuidado."
+                ]
+            },
+            {
+                id: 5,
+                name: "Queque Marmoleado Esponjoso",
+                description: "El clásico queque de vainilla y chocolate, con una miga tierna y húmeda.",
+                image: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                servings: { default: 12, unit: 'porciones' },
+                ingredients: [
+                    { name: 'Mantequilla sin sal, a T° ambiente', base_quantity: 200, unit: 'g' },
+                    { name: 'Azúcar granulada', base_quantity: 250, unit: 'g' },
+                    { name: 'Huevos grandes', base_quantity: 4, unit: 'unidades' },
+                    { name: 'Harina sin polvos de hornear', base_quantity: 300, unit: 'g' },
+                    { name: 'Polvos de hornear', base_quantity: 2, unit: 'cdtas' },
+                    { name: 'Leche entera', base_quantity: 180, unit: 'ml' },
+                    { name: 'Extracto de vainilla', base_quantity: 2, unit: 'cdtas' },
+                    { name: 'Cacao en polvo sin azúcar', base_quantity: 30, unit: 'g' },
+                    { name: 'Leche extra (para el cacao)', base_quantity: 2, unit: 'cdas' },
+                ],
+                instructions: [
+                    "Precalentar el horno a 180°C. Engrasar y enharinar un molde de queque tipo corona o rectangular de 24 cm.",
+                    "Realizar un cremado batiendo la mantequilla y el azúcar hasta obtener una mezcla pálida y aireada.",
+                    "Incorporar los huevos de uno en uno, batiendo bien después de cada adición. Añadir el extracto de vainilla.",
+                    "En un recipiente aparte, tamizar la harina y los polvos de hornear. Agregar esta mezcla seca a la preparación de mantequilla en tres adiciones, alternando con la leche en dos adiciones.",
+                    "Dividir la masa en dos porciones: aproximadamente 2/3 para la masa de vainilla y 1/3 para la de chocolate.",
+                    "A la porción más pequeña, incorporar el cacao en polvo previamente tamizado y las 2 cucharadas de leche extra. Mezclar hasta homogeneizar.",
+                    "Verter cucharadas alternadas de ambas masas en el molde preparado. Con un palillo o cuchillo fino, realizar un movimiento en forma de 'S' o zigzag a través de la masa una sola vez para crear el efecto marmoleado sin sobre-mezclar.",
+                    "Hornear por 45-55 minutos, o hasta que al insertar un palillo en el centro, este salga limpio. Dejar enfriar en el molde por 10-15 minutos antes de desmoldar sobre una rejilla."
+                ]
+            },
+            {
+                id: 6,
+                name: "Berlines Rellenos",
+                description: "Suaves, esponjosos y rellenos de manjar o crema pastelera. Un clásico irresistible.",
+                image: "https://images.unsplash.com/photo-1621939514649-280e25f3a8de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
+                servings: { default: 15, unit: 'unidades' },
+                ingredients: [
+                    { name: 'Harina de fuerza', base_quantity: 500, unit: 'g' },
+                    { name: 'Levadura seca instantánea', base_quantity: 7, unit: 'g' },
+                    { name: 'Azúcar granulada', base_quantity: 60, unit: 'g' },
+                    { name: 'Sal', base_quantity: 1, unit: 'cdta' },
+                    { name: 'Leche tibia', base_quantity: 250, unit: 'ml' },
+                    { name: 'Huevos', base_quantity: 2, unit: 'unidades' },
+                    { name: 'Mantequilla blanda', base_quantity: 60, unit: 'g' },
+                    { name: 'Aceite para freír', base_quantity: 1, unit: 'L' },
+                    { name: 'Manjar o crema pastelera para rellenar', base_quantity: 500, unit: 'g' },
+                    { name: 'Azúcar flor para espolvorear', base_quantity: 100, unit: 'g' },
+                ],
+                instructions: [
+                    "Activar la levadura: en un bol pequeño, mezclar la leche tibia (no caliente) con una cucharada del azúcar y la levadura. Dejar reposar por 5-10 minutos hasta que espume.",
+                    "En el bol de una batidora con gancho de amasar, combinar la harina, el resto del azúcar y la sal. Crear un hueco en el centro y verter la mezcla de levadura activada y los huevos ligeramente batidos.",
+                    "Amasar a velocidad baja hasta formar una masa. Incorporar la mantequilla blanda en cubos, poco a poco, y continuar amasando por 10-15 minutos a velocidad media hasta que la masa esté suave, elástica y se despegue de los bordes del bol (prueba de la ventana).",
+                    "Formar una bola, colocarla en un bol ligeramente aceitado, cubrir y dejar levar en un lugar cálido por 1.5 a 2 horas, o hasta que duplique su volumen.",
+                    "Desgasificar la masa suavemente y estirarla sobre una superficie enharinada hasta alcanzar un grosor de 1.5 cm. Utilizar un cortador circular de 7-8 cm para cortar las piezas.",
+                    "Colocar los discos de masa en una bandeja con papel mantequilla, cubrir y dejar levar por segunda vez durante 30-45 minutos.",
+                    "Calentar el aceite en una olla profunda a 170°C. Freír los berlines en tandas, aproximadamente 2-3 minutos por lado, hasta que estén uniformemente dorados. Retirar y escurrir sobre papel absorbente.",
+                    "Una vez que los berlines estén completamente fríos, utilizar una manga pastelera con boquilla de relleno para inyectar el manjar o la crema pastelera. Finalmente, espolvorear generosamente con azúcar flor."
+                ]
+            }
+        ];
+        
+        // --- STATE ---
+        let favorites = JSON.parse(localStorage.getItem('auraPatisserieFavorites')) || [];
+        let shoppingList = JSON.parse(localStorage.getItem('auraPatisserieShoppingList')) || [];
+
+        // --- DOM ELEMENTS ---
+        const recipeGrid = document.getElementById('recipe-grid');
+        const modal = document.getElementById('recipe-modal');
+        const modalContent = document.getElementById('modal-content');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('no-results');
+        const favoritesBtn = document.getElementById('favoritesBtn');
+        const shoppingListBtn = document.getElementById('shoppingListBtn');
+        const shoppingListModal = document.getElementById('shopping-list-modal');
+        const closeShoppingListModal = document.getElementById('close-shopping-list-modal');
+        const shoppingListContent = document.getElementById('shopping-list-content');
+        const shoppingListCount = document.getElementById('shoppingListCount');
+
+        // --- FUNCTIONS ---
+
+        const saveFavorites = () => {
+            localStorage.setItem('auraPatisserieFavorites', JSON.stringify(favorites));
+        };
+
+        const saveShoppingList = () => {
+            localStorage.setItem('auraPatisserieShoppingList', JSON.stringify(shoppingList));
+            updateShoppingListCount();
+        };
+
+        const updateShoppingListCount = () => {
+            const count = shoppingList.reduce((acc, curr) => acc + 1, 0); // Count recipes
+            shoppingListCount.textContent = count;
+            if (count > 0) {
+                shoppingListCount.style.transform = 'scale(1)';
+                shoppingListCount.style.opacity = '1';
+            } else {
+                 shoppingListCount.style.transform = 'scale(0)';
+                 shoppingListCount.style.opacity = '0';
+            }
+        };
+
+        const renderRecipes = (recipesToRender) => {
+            recipeGrid.innerHTML = '';
+            if (recipesToRender.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+            recipesToRender.forEach(recipe => {
+                const isFavorite = favorites.includes(recipe.id);
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-md overflow-hidden transform transition-all duration-300 card-hover cursor-pointer border border-gray-100/50';
+                card.innerHTML = `
+                    <div class="relative">
+                        <img src="${recipe.image}" alt="${recipe.name}" class="w-full h-56 object-cover">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <button class="favorite absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-md transition-transform hover:scale-110 ${isFavorite ? 'active' : ''}" data-id="${recipe.id}">
+                            <svg class="w-6 h-6" fill="none" stroke="#BDBDBD" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"></path></svg>
+                        </button>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold font-display text-white">${recipe.name}</h3>
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.favorite')) {
+                        toggleFavorite(recipe.id, e.target.closest('.favorite'));
+                    } else {
+                        openModal(recipe);
+                    }
+                });
+                recipeGrid.appendChild(card);
             });
-            noResults.style.display = hasResults ? 'none' : 'block';
-        }
+        };
 
-        // Calculadora de ingredientes optimizada
-        function calculateIngredients(input) {
-            const servings = parseInt(input.value);
-            const baseServings = parseInt(input.closest('.calculator').previousElementSibling.dataset.baseServings);
-            const factor = servings / baseServings;
-            const quantities = input.closest('.recipe-content').querySelectorAll('.quantity');
-            quantities.forEach(q => {
-                const original = parseFloat(q.dataset.original || q.textContent);
-                if (!q.dataset.original) q.dataset.original = original;
-                q.textContent = (original * factor).toFixed(2);
+        const toggleFavorite = (id, button) => {
+            const index = favorites.indexOf(id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+                button.classList.remove('active');
+            } else {
+                favorites.push(id);
+                button.classList.add('active');
+            }
+            saveFavorites();
+        };
+
+        const openModal = (recipe) => {
+            modalContent.innerHTML = `
+                <div class="p-6 border-b border-gray-100 flex justify-between items-start" style="background: linear-gradient(135deg, #f0b7bd1a, #93cb9a1a);">
+                    <div>
+                        <h2 class="text-3xl font-display text-gray-800">${recipe.name}</h2>
+                        <p class="text-gray-500 mt-1">${recipe.description}</p>
+                    </div>
+                    <button id="close-modal" class="text-3xl text-gray-400 hover:text-gray-700 transition-colors">&times;</button>
+                </div>
+                <div class="flex-grow overflow-y-auto flex flex-col lg:flex-row">
+                    <div class="w-full lg:w-2/5 p-6 border-b lg:border-r lg:border-b-0">
+                        <img src="${recipe.image}" alt="${recipe.name}" class="rounded-lg shadow-lg w-full object-cover mb-6">
+                        <h3 class="text-xl font-display mb-3 text-gray-700">Calculadora de Porciones</h3>
+                        <div class="bg-gray-100/80 rounded-lg p-4 flex items-center space-x-4">
+                            <label for="servings-input" class="font-semibold text-gray-600">Rinde:</label>
+                            <input type="number" id="servings-input" value="${recipe.servings.default}" min="1" class="w-20 p-2 border border-gray-200 rounded-md text-center focus:ring-2 focus:ring-[#f0b7bd] focus:border-[#f0b7bd]">
+                            <span class="text-gray-600">${recipe.servings.unit}</span>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5 p-6 flex flex-col">
+                        <div class="flex-grow overflow-y-auto pr-2">
+                             <h3 class="text-2xl font-display mb-4 text-gray-700">Ingredientes</h3>
+                             <ul id="ingredient-list" class="space-y-2 text-gray-700 mb-8">
+                                </ul>
+                             <h3 class="text-2xl font-display mb-4 text-gray-700">Procedimiento</h3>
+                             <ol id="instructions-list" class="list-decimal list-inside space-y-4 text-gray-800 text-base leading-relaxed">
+                                 </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 border-t border-gray-100 bg-white rounded-b-2xl">
+                    <button id="add-to-shopping-list" data-id="${recipe.id}" class="w-full btn-primary text-white py-3 rounded-lg font-bold text-lg">Agregar a mi Lista de Compras</button>
+                </div>
+            `;
+            updateIngredients(recipe, recipe.servings.default);
+            updateInstructions(recipe);
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+            }, 50);
+
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+            document.getElementById('servings-input').addEventListener('input', (e) => {
+                const newServings = parseInt(e.target.value, 10) || recipe.servings.default;
+                updateIngredients(recipe, newServings);
             });
-        }
+            document.getElementById('add-to-shopping-list').addEventListener('click', (e) => {
+                const recipeId = parseInt(e.currentTarget.dataset.id, 10);
+                const recipeToAdd = recipes.find(r => r.id === recipeId);
+                const servingsInput = document.getElementById('servings-input');
+                const currentServings = parseInt(servingsInput.value, 10) || recipeToAdd.servings.default;
+                
+                const calculatedIngredients = recipeToAdd.ingredients.map(ing => {
+                    const factor = currentServings / recipeToAdd.servings.default;
+                    return {
+                        ...ing,
+                        quantity: ing.base_quantity * factor
+                    };
+                });
 
-        // Modal de lista de compras
-        function toggleModal() {
-            const modal = document.getElementById('shopping-modal');
-            modal.classList.toggle('show');
-        }
+                addToShoppingList(recipeToAdd.name, calculatedIngredients);
+            });
+        };
+        
+        const closeModal = () => {
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        };
 
-        // Agregar a lista de compras
-        let shoppingItems = [];
-        function addToShoppingList(button) {
-            const recipe = button.closest('.recipe-card');
-            const title = recipe.querySelector('h3').textContent;
-            const ingredients = Array.from(recipe.querySelectorAll('.ingredients-list li')).map(li => li.textContent);
-            shoppingItems.push({ title, ingredients });
-            updateShoppingCount();
-            alert('Agregado a la lista de compras'); // Retroalimentación simple
-        }
+        const updateIngredients = (recipe, servings) => {
+            const ingredientList = document.getElementById('ingredient-list');
+            ingredientList.innerHTML = '';
+            const factor = servings / recipe.servings.default;
+            recipe.ingredients.forEach(ing => {
+                const newQuantity = ing.base_quantity * factor;
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center border-b border-pink-100/50 py-2';
+                li.innerHTML = `
+                    <span>${ing.name}</span>
+                    <span class="font-bold text-[#e598a2]">${formatQuantity(newQuantity)} ${ing.unit}</span>
+                `;
+                ingredientList.appendChild(li);
+            });
+        };
+        
+        const updateInstructions = (recipe) => {
+            const instructionsList = document.getElementById('instructions-list');
+            instructionsList.innerHTML = '';
+            recipe.instructions.forEach(step => {
+                const li = document.createElement('li');
+                li.className = 'pb-2';
+                li.textContent = step;
+                instructionsList.appendChild(li);
+            });
+        };
 
-        function updateShoppingCount() {
-            const btn = document.querySelector('.shopping-list-btn');
-            btn.textContent = `Lista de Compras (${shoppingItems.length})`;
-        }
+        const formatQuantity = (quantity) => {
+            if (Number.isInteger(quantity)) {
+                return quantity;
+            }
+            if (quantity < 0.1) {
+                return quantity.toFixed(2);
+            }
+            return parseFloat(quantity.toFixed(1));
+        };
 
-        // Exportar lista (simulado; en producción usar jsPDF para PDF, etc.)
-        function exportList(type) {
-            // Lógica simulada; implementar según necesidades
-            alert(`Exportando como ${type}`);
-        }
+        const handleSearch = () => {
+            const query = searchInput.value.toLowerCase().trim();
+            const filteredRecipes = recipes.filter(recipe => {
+                const nameMatch = recipe.name.toLowerCase().includes(query);
+                const ingredientMatch = recipe.ingredients.some(ing => ing.name.toLowerCase().includes(query));
+                return nameMatch || ingredientMatch;
+            });
+            renderRecipes(filteredRecipes);
+        };
 
-        function shareWhatsApp() {
-            // Simulado; usar wa.me en producción
-            alert('Compartiendo en WhatsApp');
-        }
+        const showFavorites = () => {
+            const favoriteRecipes = recipes.filter(recipe => favorites.includes(recipe.id));
+            searchInput.value = '';
+            renderRecipes(favoriteRecipes);
+        };
+        
+        const addToShoppingList = (recipeName, ingredients) => {
+            const existingRecipeIndex = shoppingList.findIndex(item => item.recipeName === recipeName);
+            if (existingRecipeIndex > -1) {
+                shoppingList[existingRecipeIndex] = { recipeName, ingredients };
+            } else {
+                shoppingList.push({ recipeName, ingredients });
+            }
+            saveShoppingList();
+            
+            const btn = document.getElementById('add-to-shopping-list');
+            if (btn) {
+                btn.textContent = '¡Agregado a la lista!';
+                btn.style.backgroundColor = '#93cb9a';
+                 btn.style.boxShadow = '0 7px 20px -5px rgba(147, 203, 154, 1)';
+                setTimeout(() => {
+                    closeModal();
+                }, 1200);
+            }
+        };
+        
+        const renderShoppingList = () => {
+            if (shoppingList.length === 0) {
+                shoppingListContent.innerHTML = `<p class="text-gray-500 text-center py-10">Tu lista de compras está vacía. Agrega ingredientes de tus recetas favoritas.</p>`;
+                return;
+            }
+
+            const combinedIngredients = {};
+            shoppingList.forEach(recipeItem => {
+                recipeItem.ingredients.forEach(ing => {
+                    const key = `${ing.name.toLowerCase()}_${ing.unit}`;
+                    if (combinedIngredients[key]) {
+                        combinedIngredients[key].quantity += ing.quantity;
+                    } else {
+                        combinedIngredients[key] = {
+                            name: ing.name,
+                            quantity: ing.quantity,
+                            unit: ing.unit
+                        };
+                    }
+                });
+            });
+
+            let html = '<h3 class="text-xl font-display mb-4 text-gray-700">Ingredientes Totales</h3><ul class="space-y-3">';
+            Object.values(combinedIngredients).sort((a,b) => a.name.localeCompare(b.name)).forEach(ing => {
+                html += `
+                    <li class="flex items-center justify-between p-3 rounded-lg bg-white border">
+                        <span class="text-gray-700">${ing.name}</span>
+                        <span class="font-bold text-[#e598a2]">${formatQuantity(ing.quantity)} ${ing.unit}</span>
+                    </li>
+                `;
+            });
+            html += '</ul>';
+
+            html += `<h3 class="font-display text-xl mt-8 mb-3 border-t pt-6 text-gray-700">Recetas en la Lista</h3>
+                     <ul class="space-y-2 text-gray-600">`;
+            shoppingList.forEach(item => {
+                html += `<li class="flex items-center justify-between bg-white border p-3 rounded-lg">${item.recipeName} <button class="remove-recipe-from-list text-red-400 hover:text-red-600 font-bold text-lg" data-name="${item.recipeName}" title="Quitar receta">&times;</button></li>`;
+            });
+            html += '</ul>';
+
+            shoppingListContent.innerHTML = html;
+        };
+
+        const openShoppingListModal = () => {
+            renderShoppingList();
+            shoppingListModal.classList.remove('hidden');
+            shoppingListModal.classList.add('flex');
+            setTimeout(() => {
+                shoppingListModal.querySelector('div').classList.remove('scale-95', 'opacity-0');
+            }, 50);
+        };
+
+        const closeShoppingListModalFunc = () => {
+            shoppingListModal.querySelector('div').classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                shoppingListModal.classList.add('hidden');
+                shoppingListModal.classList.remove('flex');
+            }, 300);
+        };
+
+        const getShoppingListAsText = () => {
+            let text = "Lista de Compras - Aura Pâtisserie\n===================================\n\n";
+            const combinedIngredients = {};
+            shoppingList.forEach(recipeItem => {
+                recipeItem.ingredients.forEach(ing => {
+                    const key = `${ing.name.toLowerCase()}_${ing.unit}`;
+                    if (combinedIngredients[key]) {
+                        combinedIngredients[key].quantity += ing.quantity;
+                    } else {
+                        combinedIngredients[key] = { name: ing.name, quantity: ing.quantity, unit: ing.unit };
+                    }
+                });
+            });
+
+            text += "INGREDIENTES:\n";
+            Object.values(combinedIngredients).sort((a,b) => a.name.localeCompare(b.name)).forEach(ing => {
+                text += `• ${ing.name}: ${formatQuantity(ing.quantity)} ${ing.unit}\n`;
+            });
+            
+            text += "\nRECETAS INCLUIDAS:\n";
+            shoppingList.forEach(item => {
+                text += `• ${item.recipeName}\n`;
+            });
+
+            return text;
+        };
+        
+        // --- EVENT LISTENERS ---
+        searchInput.addEventListener('input', handleSearch);
+        favoritesBtn.addEventListener('click', showFavorites);
+        shoppingListBtn.addEventListener('click', openShoppingListModal);
+        closeShoppingListModal.addEventListener('click', closeShoppingListModalFunc);
+        
+        shoppingListContent.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-recipe-from-list')) {
+                const recipeNameToRemove = e.target.dataset.name;
+                shoppingList = shoppingList.filter(item => item.recipeName !== recipeNameToRemove);
+                saveShoppingList();
+                renderShoppingList();
+            }
+        });
+
+        document.getElementById('copy-list-btn').addEventListener('click', () => {
+            const text = getShoppingListAsText();
+            navigator.clipboard.writeText(text).then(() => {
+                alert('¡Lista copiada al portapapeles!');
+            }).catch(err => {
+                 console.error('Error al copiar:', err);
+                 alert('No se pudo copiar la lista.');
+            });
+        });
+
+        document.getElementById('download-txt-btn').addEventListener('click', () => {
+            const text = getShoppingListAsText();
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lista_compras_aura_patisserie.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById('whatsapp-share-btn').addEventListener('click', (e) => {
+            const text = getShoppingListAsText();
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+            e.currentTarget.href = url;
+        });
+
+        document.getElementById('download-pdf-btn').addEventListener('click', async () => {
+            const { jsPDF } = window.jspdf;
+            const loader = document.getElementById('pdf-loader');
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
+
+            const listContentClone = shoppingListContent.cloneNode(true);
+            listContentClone.querySelectorAll('button').forEach(btn => btn.remove());
+            listContentClone.style.padding = '25px';
+            listContentClone.style.fontFamily = 'Poppins, sans-serif';
+            listContentClone.style.width = '650px';
+            listContentClone.style.background = 'white';
+            
+            const pdfContainer = document.createElement('div');
+            const title = document.createElement('h1');
+            title.innerText = 'Lista de Compras';
+            title.className = 'text-3xl font-display p-6 text-center';
+            pdfContainer.appendChild(title);
+            pdfContainer.appendChild(listContentClone);
+            document.body.appendChild(pdfContainer);
+
+            try {
+                const canvas = await html2canvas(pdfContainer, { scale: 2 });
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'px',
+                    format: [canvas.width, canvas.height]
+                });
+                pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+                pdf.save('lista_compras_aura_patisserie.pdf');
+            } catch (error) {
+                console.error("Error al generar PDF:", error);
+                alert("Hubo un problema al generar el PDF.");
+            } finally {
+                document.body.removeChild(pdfContainer);
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
+            }
+        });
+
+        // --- INITIALIZATION ---
+        renderRecipes(recipes);
+        updateShoppingListCount();
+        // Initial animation for shopping list count
+        shoppingListCount.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+        shoppingListCount.style.transform = 'scale(0)';
+        shoppingListCount.style.opacity = '0';
+    });
     </script>
 </body>
 </html>
