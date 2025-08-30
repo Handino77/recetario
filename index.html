@@ -3,440 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dolce Delizia - Recetario de Repostería</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <meta name="description" content="Recetas premium de repostería chilena para emprendedoras. Precisión, sabor y tradición en cada bocado.">
+    <meta name="keywords" content="repostería, recetas, chileno, emprendedoras, dulces">
+    <meta property="og:title" content="Dolce Delizia - El Secreto de la Repostería Chilena">
+    <meta property="og:description" content="Recetas premium con un toque chileno.">
+    <meta property="og:image" content="https://example.com/imagen-hero.jpg">
+    <title>Dolce Delizia</title>
     <style>
-        :root {
-            --gelato-mint: #93cb9a;
-            --gelato-pink: #f0b7bd;
-            --gelato-yellow: #f3e88e;
-            --gelato-cyan: #99e3ec;
-            --gelato-teal: #50b4c3;
-            --cream: #fefdfb;
-            --dark-chocolate: #3e2723;
-        }
-        
+        /* Estilos generales para branding: paleta cálida (cremas, dorados, pasteles) con toques chilenos (rojo/verde sutil) */
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--cream) 0%, #faf9f7 100%);
-            color: var(--dark-chocolate);
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdfaf7; /* Crema suave */
+            color: #4a3c31; /* Marrón chocolate */
         }
-        
-        .font-display {
+        h1, h2, h3 {
             font-family: 'Playfair Display', serif;
+            color: #a52a2a; /* Rojo vino chileno */
         }
-        
-        .font-script {
-            font-family: 'Dancing Script', cursive;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #fffaf0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-
-        /* Gradientes inspirados en gelato */
-        .bg-gelato-gradient {
-            background: linear-gradient(135deg, var(--gelato-mint) 0%, var(--gelato-cyan) 100%);
+        .logo {
+            width: 150px;
+            height: auto;
         }
-        
-        .bg-strawberry-gradient {
-            background: linear-gradient(135deg, var(--gelato-pink) 0%, #ffd6d9 100%);
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #4a3c31;
+            font-weight: bold;
         }
-        
-        .bg-lemon-gradient {
-            background: linear-gradient(135deg, var(--gelato-yellow) 0%, #fff5b7 100%);
-        }
-        
-        .bg-ocean-gradient {
-            background: linear-gradient(135deg, var(--gelato-teal) 0%, var(--gelato-cyan) 100%);
-        }
-
-        /* Tarjetas con efecto de vidrio esmerilado */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .glass-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Botones estilo gelato */
-        .btn-gelato {
-            background: linear-gradient(135deg, var(--gelato-mint), var(--gelato-teal));
-            color: white;
+        .shopping-list-btn {
+            background-color: #ffd700; /* Dorado */
             border: none;
-            padding: 12px 24px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+            background-image: url('placeholder-hero.jpg'); /* Placeholder para imagen hero */
+            background-size: cover;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .hero input[type="search"] {
+            width: 60%;
+            max-width: 600px;
+            padding: 15px;
+            border: none;
             border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(147, 203, 154, 0.4);
-        }
-        
-        .btn-gelato:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(147, 203, 154, 0.6);
-        }
-
-        /* Header con gradiente gelato */
-        .header-gelato {
-            background: linear-gradient(135deg, 
-                rgba(147, 203, 154, 0.9) 0%, 
-                rgba(153, 227, 236, 0.9) 50%, 
-                rgba(240, 183, 189, 0.9) 100%);
-            backdrop-filter: blur(20px);
-        }
-
-        /* Calculadora de ingredientes destacada */
-        .calculator-highlight {
-            background: linear-gradient(135deg, var(--gelato-yellow) 0%, var(--gelato-pink) 100%);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 12px 40px rgba(243, 232, 142, 0.3);
-            animation: gentle-pulse 3s ease-in-out infinite alternate;
-        }
-        
-        @keyframes gentle-pulse {
-            0% { box-shadow: 0 12px 40px rgba(243, 232, 142, 0.3); }
-            100% { box-shadow: 0 16px 50px rgba(243, 232, 142, 0.5); }
-        }
-
-        /* Inputs estilo gelato */
-        .input-gelato {
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid transparent;
-            border-radius: 20px;
-            padding: 16px 24px;
             font-size: 16px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        
-        .input-gelato:focus {
-            outline: none;
-            border-color: var(--gelato-teal);
-            background: rgba(255, 255, 255, 0.95);
-            transform: scale(1.02);
+        .recipes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .recipe-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .recipe-card:hover {
+            transform: scale(1.05);
+        }
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #eee; /* Placeholder para imágenes */
+        }
+        .recipe-content {
+            padding: 20px;
+        }
+        .ingredients-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .ingredients-list li {
+            margin-bottom: 10px;
+        }
+        .calculator {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .calculator input {
+            width: 60px;
+            padding: 5px;
+            margin-left: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .calculator button {
+            background-color: #ffd700;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #888;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 200;
+            width: 80%;
+            max-width: 500px;
+        }
+        .modal.show {
+            display: block;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .modal button {
+            background-color: #ffd700;
+            border: none;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #fffaf0;
+            margin-top: 40px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #4a3c31;
         }
 
-        /* Modal estilo italiano */
-        .modal-gelato {
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.95) 0%, 
-                rgba(250, 249, 247, 0.95) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Iconos favoritos con animación */
-        .favorite-icon {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .favorite-icon.active {
-            color: var(--gelato-pink);
-            transform: scale(1.2);
-            filter: drop-shadow(0 4px 8px rgba(240, 183, 189, 0.4));
-        }
-
-        /* Lista de ingredientes elegante */
-        .ingredient-item {
-            background: linear-gradient(90deg, 
-                rgba(147, 203, 154, 0.1) 0%, 
-                rgba(153, 227, 236, 0.1) 100%);
-            border-left: 4px solid var(--gelato-mint);
-            transition: all 0.2s ease;
-        }
-        
-        .ingredient-item:hover {
-            background: linear-gradient(90deg, 
-                rgba(147, 203, 154, 0.2) 0%, 
-                rgba(153, 227, 236, 0.2) 100%);
-            transform: translateX(8px);
-        }
-
-        /* Responsive mejorado para móviles */
-        @media (max-width: 640px) {
-            .container {
-                padding-left: 1rem;
-                padding-right: 1rem;
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
             }
-            
-            .glass-card {
-                margin-bottom: 1rem;
+            nav {
+                margin-top: 10px;
             }
-            
-            .modal-gelato {
-                margin: 0.5rem;
-                max-height: 95vh;
-                overflow-y: auto;
+            .hero input[type="search"] {
+                width: 90%;
             }
-        }
-
-        /* Loader elegante */
-        .gelato-loader {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: conic-gradient(var(--gelato-mint), var(--gelato-pink), var(--gelato-yellow), var(--gelato-cyan), var(--gelato-mint));
-            animation: spin 1s linear infinite;
-        }
-        
-        .gelato-loader::after {
-            content: '';
-            position: absolute;
-            inset: 4px;
-            background: white;
-            border-radius: 50%;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Números de porciones destacados */
-        .servings-number {
-            background: linear-gradient(135deg, var(--gelato-teal), var(--gelato-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-            font-size: 1.5rem;
         }
     </style>
 </head>
-<body class="antialiased">
-
-    <!-- Header -->
-    <header class="header-gelato sticky top-0 z-40 shadow-lg">
-        <div class="container mx-auto px-4 sm:px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <!-- Logo gelato -->
-                    <div class="relative">
-                        <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="8" r="3" fill="#93cb9a"/>
-                            <circle cx="12" cy="12" r="3" fill="#f0b7bd"/>
-                            <circle cx="12" cy="16" r="3" fill="#f3e88e"/>
-                            <path d="M12 19v3a1 1 0 01-2 0v-3" stroke="#3e2723" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl sm:text-3xl font-bold font-display text-white">
-                            Dolce <span class="font-script">Delizia</span>
-                        </h1>
-                        <p class="text-xs sm:text-sm text-white/80 font-light">Gelateria & Pasticceria</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-3 sm:space-x-6">
-                    <button id="favoritesBtn" class="text-white/90 hover:text-white transition-all font-medium text-sm sm:text-base p-2">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                        </svg>
-                    </button>
-                    <button id="shoppingListBtn" class="relative text-white/90 hover:text-white transition-all font-medium text-sm sm:text-base p-2">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"/>
-                        </svg>
-                        <span id="shoppingListCount" class="absolute -top-1 -right-1 bg-gelato-pink text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden font-bold">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+<body>
+    <header class="header">
+        <img src="placeholder-logo.png" alt="Dolce Delizia Logo" class="logo"> <!-- Placeholder para logo -->
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/recetas">Recetas</a>
+            <a href="/tienda">Tienda</a>
+            <a href="/contacto">Contacto</a>
+        </nav>
+        <button class="shopping-list-btn" onclick="toggleModal()">Lista de Compras (0)</button>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
-        <section class="text-center py-12 sm:py-20 relative overflow-hidden">
-            <!-- Formas decorativas de fondo -->
-            <div class="absolute inset-0 pointer-events-none">
-                <div class="absolute top-10 left-10 w-20 h-20 rounded-full bg-gelato-mint opacity-20 animate-bounce" style="animation-delay: 0s;"></div>
-                <div class="absolute top-32 right-20 w-16 h-16 rounded-full bg-gelato-pink opacity-20 animate-bounce" style="animation-delay: 1s;"></div>
-                <div class="absolute bottom-20 left-20 w-24 h-24 rounded-full bg-gelato-yellow opacity-20 animate-bounce" style="animation-delay: 2s;"></div>
-                <div class="absolute bottom-32 right-10 w-18 h-18 rounded-full bg-gelato-cyan opacity-20 animate-bounce" style="animation-delay: 3s;"></div>
-            </div>
-            
-            <div class="container mx-auto px-4 sm:px-6 relative z-10">
-                <h2 class="text-4xl sm:text-6xl md:text-7xl font-script mb-4" style="background: linear-gradient(135deg, #50b4c3, #93cb9a, #f0b7bd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);">
-                    Sapori Autentici
-                </h2>
-                <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto font-light">
-                    Recetas artesanales con el alma de Italia y el corazón de Chile
-                </p>
-            </div>
+        <section class="hero">
+            <h1>El Secreto de la Repostería</h1>
+            <p>Recetas premium con un toque chileno. Precisión, sabor y tradición en cada bocado.</p>
+            <input type="search" placeholder="Busca tu receta favorita..." aria-label="Buscar recetas" oninput="searchRecipes(this.value)">
         </section>
 
-        <div class="container mx-auto px-4 sm:px-6 py-8">
-            <!-- Search Section -->
-            <section class="mb-8 sm:mb-12">
-                <div class="relative max-w-xl mx-auto">
-                    <input type="text" id="searchInput" placeholder="Cerca la tua ricetta..." class="w-full input-gelato text-center">
-                    <div class="absolute right-4 top-1/2 -translate-y-1/2 bg-ocean-gradient p-3 rounded-full">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
+        <section class="recipes" id="recipes-container">
+            <!-- Recetas conservadas como placeholders; se reemplazarán por reales -->
+            <div class="recipe-card">
+                <img src="placeholder-recipe1.jpg" alt="Torta de Manjar" class="recipe-image">
+                <div class="recipe-content">
+                    <h3>Torta de Manjar</h3>
+                    <p>Una deliciosa torta tradicional chilena con capas de manjar y bizcocho suave.</p>
+                    <ul class="ingredients-list" data-base-servings="8">
+                        <li><span class="quantity">2</span> tazas de harina</li>
+                        <li><span class="quantity">1</span> taza de azúcar</li>
+                        <li><span class="quantity">500</span> g de manjar</li>
+                        <li><span class="quantity">4</span> huevos</li>
+                        <li><span class="quantity">1</span> cucharadita de vainilla</li>
+                    </ul>
+                    <div class="calculator">
+                        <label>Porciones: <input type="number" value="8" min="1" onchange="calculateIngredients(this)"></label>
+                        <button onclick="addToShoppingList(this)">Agregar a Lista</button>
                     </div>
                 </div>
-            </section>
-
-            <!-- Recipe Grid -->
-            <section id="recipe-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-8">
-                <!-- Recipe cards will be injected here -->
-            </section>
-            
-            <div id="no-results" class="text-center py-12 hidden">
-                <div class="text-6xl mb-4">🍨</div>
-                <h3 class="text-2xl font-display text-gray-600">Nessuna ricetta trovata</h3>
-                <p class="text-gray-500 mt-2">Prova con un'altra ricerca, caro!</p>
             </div>
+
+            <div class="recipe-card">
+                <img src="placeholder-recipe2.jpg" alt="Empanadas Dulces" class="recipe-image">
+                <div class="recipe-content">
+                    <h3>Empanadas Dulces</h3>
+                    <p>Empanadas rellenas de frutas y especias, perfectas para un postre chileno.</p>
+                    <ul class="ingredients-list" data-base-servings="10">
+                        <li><span class="quantity">3</span> tazas de harina</li>
+                        <li><span class="quantity">200</span> g de mantequilla</li>
+                        <li><span class="quantity">2</span> manzanas</li>
+                        <li><span class="quantity">1</span> taza de azúcar morena</li>
+                        <li><span class="quantity">1</span> cucharadita de canela</li>
+                    </ul>
+                    <div class="calculator">
+                        <label>Porciones: <input type="number" value="10" min="1" onchange="calculateIngredients(this)"></label>
+                        <button onclick="addToShoppingList(this)">Agregar a Lista</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Más recetas placeholders si es necesario -->
+        </section>
+
+        <div class="no-results" id="no-results" style="display: none;">
+            No encontramos esa delicia. Intenta con otra búsqueda.
         </div>
     </main>
 
-    <!-- Recipe Detail Modal -->
-    <div id="recipe-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" style="background: rgba(62, 39, 35, 0.6);">
-        <div id="modal-content" class="modal-gelato rounded-3xl w-full max-w-6xl max-h-[95vh] flex flex-col transform transition-all duration-300 scale-95 opacity-0 overflow-hidden">
-            <!-- Modal content will be injected here -->
+    <div class="modal" id="shopping-modal">
+        <h2>Lista de Compras</h2>
+        <ul id="shopping-list"></ul>
+        <div>
+            <button onclick="exportList('copy')">Copiar</button>
+            <button onclick="exportList('txt')">Descargar TXT</button>
+            <button onclick="exportList('pdf')">Descargar PDF</button>
+            <button onclick="shareWhatsApp()">WhatsApp</button>
         </div>
+        <button onclick="toggleModal()">Cerrar</button>
+        <p>Generando PDF...</p> <!-- Placeholder para loading -->
     </div>
 
-    <!-- Shopping List Modal -->
-    <div id="shopping-list-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" style="background: rgba(62, 39, 35, 0.6);">
-        <div class="modal-gelato rounded-3xl w-full max-w-2xl max-h-[95vh] flex flex-col transform transition-all duration-300 scale-95 opacity-0 overflow-hidden">
-            <div class="p-6 bg-strawberry-gradient text-white flex justify-between items-center">
-                <h2 class="text-2xl font-display">Lista della Spesa</h2>
-                <button id="close-shopping-list-modal" class="text-white/80 hover:text-white text-3xl transition-colors">&times;</button>
-            </div>
-            <div id="shopping-list-content" class="p-6 overflow-y-auto flex-grow">
-                <!-- Shopping list items will be injected here -->
-            </div>
-            <div class="p-6 bg-lemon-gradient">
-                <h3 class="font-bold mb-4 text-dark-chocolate">Esporta Lista</h3>
-                <div class="flex flex-wrap gap-2">
-                    <button id="copy-list-btn" class="btn-gelato text-sm">Copia</button>
-                    <button id="download-txt-btn" class="btn-gelato text-sm">TXT</button>
-                    <button id="download-pdf-btn" class="btn-gelato text-sm">PDF</button>
-                    <a id="whatsapp-share-btn" href="#" target="_blank" class="btn-gelato text-sm flex items-center bg-green-500 hover:bg-green-600">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.651 4.383 1.803 6.166l-1.225 4.485 4.574-1.196z"/></svg>
-                        WhatsApp
-                    </a>
-                </div>
-                <div id="pdf-loader" class="hidden items-center mt-4">
-                    <div class="gelato-loader relative"></div>
-                    <span class="ml-3 text-gray-600">Preparando PDF...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="mt-16 py-8 bg-gradient-to-t from-gray-50 to-transparent">
-        <div class="container mx-auto px-4 sm:px-6 text-center text-gray-500">
-            <p class="text-sm">&copy; 2025 Dolce Delizia. Fatto con amore per le nostre care pasticcere.</p>
+    <footer>
+        <p>© 2025 Dulce Chile. Creado con amor para emprendedoras.</p>
+        <div class="social-links">
+            <a href="https://instagram.com/dolcedelizia">Instagram</a>
+            <a href="https://pinterest.com/dolcedelizia">Pinterest</a>
         </div>
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- DATA ---
-        const recipes = [
-            {
-                id: 1,
-                name: "Pie de Limón Clásico",
-                description: "La combinación perfecta de acidez y dulzura sobre una base crujiente.",
-                image: "https://images.unsplash.com/photo-1572383672419-ab35444a6914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                servings: { default: 8, unit: 'porciones' },
-                ingredients: [
-                    { name: 'Galletas de vino', base_quantity: 200, unit: 'g' },
-                    { name: 'Mantequilla sin sal, derretida', base_quantity: 100, unit: 'g' },
-                    { name: 'Leche condensada', base_quantity: 790, unit: 'g' },
-                    { name: 'Yemas de huevo', base_quantity: 4, unit: 'unidades' },
-                    { name: 'Jugo de limón fresco', base_quantity: 240, unit: 'ml' },
-                    { name: 'Ralladura de limón', base_quantity: 1, unit: 'cda' },
-                    { name: 'Claras de huevo', base_quantity: 4, unit: 'unidades' },
-                    { name: 'Azúcar granulada (para merengue)', base_quantity: 200, unit: 'g' },
-                ],
-                instructions: [
-                    "Precalentar el horno a 180°C. Moler las galletas hasta obtener un polvo fino. Mezclar con la mantequilla derretida.",
-                    "Forrar la base de un molde para tarta de 23 cm con la mezcla de galletas, presionando firmemente. Hornear por 10 minutos. Dejar enfriar.",
-                    "Para el relleno, batir la leche condensada con las yemas. Incorporar gradualmente el jugo y la ralladura de limón hasta obtener una mezcla homogénea.",
-                    "Verter el relleno sobre la base de galleta fría. Hornear por 15-20 minutos, o hasta que los bordes estén firmes pero el centro aún tiemble ligeramente. Enfriar por completo.",
-                    "Para el merengue suizo, calentar las claras y el azúcar a baño maría, batiendo constantemente hasta que el azúcar se disuelva (aprox. 60°C).",
-                    "Retirar del fuego y batir con batidora eléctrica a alta velocidad hasta obtener un merengue firme y brillante.",
-                    "Cubrir el pie con el merengue, formando picos. Dorar con un soplete de cocina o bajo el grill del horno por unos minutos. Refrigerar antes de servir."
-                ]
-            },
-            {
-                id: 2,
-                name: "Brownies de Chocolate Intenso",
-                description: "Húmedos, densos y con un profundo sabor a chocolate. Ideales para cafeterías.",
-                image: "https://images.unsplash.com/photo-1563373878-33403a2702a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                servings: { default: 16, unit: 'unidades' },
-                ingredients: [
-                    { name: 'Mantequilla sin sal', base_quantity: 225, unit: 'g' },
-                    { name: 'Chocolate semi-amargo (50-60%)', base_quantity: 200, unit: 'g' },
-                    { name: 'Azúcar granulada', base_quantity: 300, unit: 'g' },
-                    { name: 'Huevos grandes', base_quantity: 4, unit: 'unidades' },
-                    { name: 'Extracto de vainilla', base_quantity: 2, unit: 'cdtas' },
-                    { name: 'Harina sin polvos de hornear', base_quantity: 120, unit: 'g' },
-                    { name: 'Cacao en polvo sin azúcar', base_quantity: 30, unit: 'g' },
-                    { name: 'Sal', base_quantity: 0.5, unit: 'cdtas' },
-                    { name: 'Nueces o chips de chocolate (opcional)', base_quantity: 100, unit: 'g' },
-                ],
-                instructions: [
-                    "Precalentar el horno a 175°C. Engrasar y enharinar un molde cuadrado de 23x23 cm.",
-                    "Derretir la mantequilla y el chocolate a baño maría o en el microondas en intervalos cortos. Dejar enfriar ligeramente.",
-                    "En un bol grande, batir los huevos con el azúcar hasta que la mezcla esté pálida y espesa. Añadir la vainilla.",
-                    "Incorporar la mezcla de chocolate derretido a la mezcla de huevos y azúcar.",
-                    "En otro bol, tamizar la harina, el cacao en polvo y la sal. Agregar los ingredientes secos a la mezcla húmeda, mezclando solo hasta combinar.",
-                    "Si se usan, añadir las nueces o chips de chocolate.",
-                    "Verter la masa en el molde preparado y hornear por 30-35 minutos. El centro debe estar ligeramente húmedo. Dejar enfriar completamente antes de cortar."
-                ]
-            },
-            {
-                id: 3,
-                name: "Cupcakes de Vainilla Perfectos",
-                description: "Una base esponjosa y versátil para decorar. El clásico que nunca falla.",
-                image: "https://images.unsplash.com/photo-1614707267537-b85aaf00c8b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                servings: { default: 12, unit: 'unidades' },
-                ingredients: [
-                    { name: 'Harina sin polvos de hornear', base_quantity: 150, unit: 'g' },
-                    { name: 'Polvos de hornear', base_quantity: 1.5, unit: 'cdtas' },
-                    { name: 'Sal', base_quantity: 0.25, unit: 'cdtas' },
-                    { name: 'Mantequilla sin sal, a T° ambiente', base_quantity: 115, unit: 'g' },
-                    { name: 'Azúcar granulada', base_quantity: 200, unit: 'g' },
-                    { name: 'Huevos grandes', base_quantity: 2, unit: 'unidades' },
-                    { name: 'Extracto de vainilla', base_quantity: 2, unit: 'cdtas' },
-                    { name: 'Leche entera', base_quantity: 120, unit: 'ml' },
-                ],
-                instructions: [
-                    "Precalentar horno a 175°C y preparar un molde para 12 cupcakes con cápsulas de papel.",
-                    "En un bol, tamizar harina, polvos de hornear y sal.",
-                    "En otro bol grande, batir la mantequilla con el azúcar hasta que esté cremosa y pálida (cremar).",
-                    "Añadir los huevos de uno en uno, batiendo bien después de cada adición. Incorporar la vainilla.",
-                    "Agregar los ingredientes secos en tres adiciones, alternando con la leche en dos adiciones, comenzando y terminando con los secos. Mezclar hasta que esté justo combinado.",
-                    "Distribuir la masa equitativamente en las cápsulas, llenando hasta 2/3 de su capacidad.",
-                    "Hornear por 20-22 minutos o hasta que un palillo insertado en el centro salga limpio. Dejar enfriar en el molde 5 minutos antes de transferir a una rejilla."
-                ]
-            },
-            {
-                id: 4,
-                name: "Cocadas Tradicionales",
-                description: "Bocados dulces y jugosos de coco, horneados a la perfección.",
-                image: "https://images.unsplash.com/photo-1625864114248-529532584831?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                servings: { default: 24, unit: 'unidades' },
-                ingredients: [
-                    { name: 'Coco rallado deshidratado', base_quantity: 250, unit: 'g' },
-                    { name: 'Leche condensada', base_quantity: 395, unit: 'g' },
-                    { name: 'Yemas de huevo', base_quantity: 2, unit: 'unidades' },
-                    { name: 'Extracto de vainilla', base_quantity: 1, unit: 'cdta' },
-                ],
-                instructions: [
-                    "Precalentar el horno a 170°C. Cubrir una bandeja de horno con papel mantequilla.",
-                    "En un bol grande, mezclar el coco rallado, la leche condensada, las yemas y la vainilla hasta que todo esté bien incorporado.",
-                    "Con las manos ligeramente humedecidas o con dos cucharas, formar pequeñas bolitas o montoncitos de la mezcla y colocarlos en la ban
+        // Funcionalidad de búsqueda (simulada)
+        function searchRecipes(query) {
+            const recipes = document.querySelectorAll('.recipe-card');
+            const noResults = document.getElementById('no-results');
+            let hasResults = false;
+            recipes.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                if (title.includes(query.toLowerCase())) {
+                    card.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            noResults.style.display = hasResults ? 'none' : 'block';
+        }
+
+        // Calculadora de ingredientes optimizada
+        function calculateIngredients(input) {
+            const servings = parseInt(input.value);
+            const baseServings = parseInt(input.closest('.calculator').previousElementSibling.dataset.baseServings);
+            const factor = servings / baseServings;
+            const quantities = input.closest('.recipe-content').querySelectorAll('.quantity');
+            quantities.forEach(q => {
+                const original = parseFloat(q.dataset.original || q.textContent);
+                if (!q.dataset.original) q.dataset.original = original;
+                q.textContent = (original * factor).toFixed(2);
+            });
+        }
+
+        // Modal de lista de compras
+        function toggleModal() {
+            const modal = document.getElementById('shopping-modal');
+            modal.classList.toggle('show');
+        }
+
+        // Agregar a lista de compras
+        let shoppingItems = [];
+        function addToShoppingList(button) {
+            const recipe = button.closest('.recipe-card');
+            const title = recipe.querySelector('h3').textContent;
+            const ingredients = Array.from(recipe.querySelectorAll('.ingredients-list li')).map(li => li.textContent);
+            shoppingItems.push({ title, ingredients });
+            updateShoppingCount();
+            alert('Agregado a la lista de compras'); // Retroalimentación simple
+        }
+
+        function updateShoppingCount() {
+            const btn = document.querySelector('.shopping-list-btn');
+            btn.textContent = `Lista de Compras (${shoppingItems.length})`;
+        }
+
+        // Exportar lista (simulado; en producción usar jsPDF para PDF, etc.)
+        function exportList(type) {
+            // Lógica simulada; implementar según necesidades
+            alert(`Exportando como ${type}`);
+        }
+
+        function shareWhatsApp() {
+            // Simulado; usar wa.me en producción
+            alert('Compartiendo en WhatsApp');
+        }
+    </script>
+</body>
+</html>
